@@ -1,8 +1,15 @@
 "use client";
 
 import { create } from "zustand";
+import { arrayMove } from "@dnd-kit/sortable";
 
-export type PanelType = "markets" | "polymarket" | "bot-control" | "chart" | "order-book" | "news";
+export type PanelType =
+  | "markets"
+  | "polymarket"
+  | "bot-control"
+  | "chart"
+  | "order-book"
+  | "news";
 
 export interface Panel {
   id: string;
@@ -19,8 +26,11 @@ interface LayoutStore {
   removePanel: (id: string) => void;
   updatePanel: (id: string, updates: Partial<Panel>) => void;
   togglePanel: (id: string) => void;
+  movePanel: (fromIndex: number, toIndex: number) => void;
   resetLayout: () => void;
 }
+
+const LAYOUT_STORAGE_KEY = "polybloom-layout";
 
 const DEFAULT_PANELS: Panel[] = [
   {
@@ -49,46 +59,90 @@ const DEFAULT_PANELS: Panel[] = [
   },
 ];
 
+function loadPersistedLayout(): Panel[] {
+  if (typeof window === "undefined") return DEFAULT_PANELS;
+  try {
+    const raw = window.localStorage.getItem(LAYOUT_STORAGE_KEY);
+    if (!raw) return DEFAULT_PANELS;
+    const parsed = JSON.parse(raw) as Panel[];
+    if (!Array.isArray(parsed)) return DEFAULT_PANELS;
+    return parsed;
+  } catch {
+    return DEFAULT_PANELS;
+  }
+}
+
+function persistLayout(panels: Panel[]) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(panels));
+  } catch {
+    // ignore
+  }
+}
+
 export const useLayoutStore = create<LayoutStore>((set) => ({
-  panels: DEFAULT_PANELS,
+  panels: loadPersistedLayout(),
 
   addPanel: (type: PanelType, title: string) => {
-    set((state) => ({
-      panels: [
-        ...state.panels,
-        {
-          id: `${type}-${Date.now()}`,
-          type,
-          title,
-          position: state.panels.length,
-          size: "medium",
-          visible: true,
-        },
-      ],
-    }));
+    set((state) => {
+      const newPanel: Panel = {
+        id: `${type}-${Date.now()}`,
+        type,
+        title,
+        position: state.panels.length,
+        size: "medium",
+        visible: true,
+      };
+
+      const newPanels = [...state.panels, newPanel];
+      persistLayout(newPanels);
+      return { panels: newPanels };
+    });
   },
 
   removePanel: (id: string) => {
-    set((state) => ({
-      panels: state.panels.filter((p) => p.id !== id),
-    }));
+    set((state) => {
+      const newPanels = state.panels.filter((p) => p.id !== id);
+      persistLayout(newPanels);
+      return { panels: newPanels };
+    });
   },
 
   updatePanel: (id: string, updates: Partial<Panel>) => {
-    set((state) => ({
-      panels: state.panels.map((p) => (p.id === id ? { ...p, ...updates } : p)),
-    }));
+    set((state) => {
+      const newPanels = state.panels.map((p) =>
+        p.id === id ? { ...p, ...updates } : p,
+      );
+      persistLayout(newPanels);
+      return { panels: newPanels };
+    });
   },
 
   togglePanel: (id: string) => {
-    set((state) => ({
-      panels: state.panels.map((p) =>
-        p.id === id ? { ...p, visible: !p.visible } : p
-      ),
-    }));
+    set((state) => {
+      const newPanels = state.panels.map((p) =>
+        p.id === id ? { ...p, visible: !p.visible } : p,
+      );
+      persistLayout(newPanels);
+      return { panels: newPanels };
+    });
+  },
+
+  movePanel: (fromIndex: number, toIndex: number) => {
+    set((state) => {
+      const reordered = arrayMove(state.panels, fromIndex, toIndex);
+      const updated = reordered.map((panel, index) => ({
+        ...panel,
+        position: index,
+      }));
+      persistLayout(updated);
+      return { panels: updated };
+    });
   },
 
   resetLayout: () => {
+    persistLayout(DEFAULT_PANELS);
     set({ panels: DEFAULT_PANELS });
   },
 }));

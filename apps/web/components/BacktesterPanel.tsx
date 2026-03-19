@@ -24,7 +24,11 @@ interface BacktesterStore {
   backtests: BacktestResults[];
   running: boolean;
   error: string | null;
-  startBacktest: (strategyName: string, startDate: Date, endDate: Date) => Promise<void>;
+  startBacktest: (
+    strategyName: string,
+    startDate: Date,
+    endDate: Date,
+  ) => Promise<void>;
   getBacktest: (id: string) => BacktestResults | undefined;
 }
 
@@ -42,22 +46,26 @@ const DEMO_BACKTEST: BacktestResults = {
   winRate: 65,
   totalTrades: 847,
   profitableTrades: 551,
-  averageWin: 23.50,
-  averageLoss: -12.30,
+  averageWin: 23.5,
+  averageLoss: -12.3,
   status: "completed",
 };
 
-export const useBacktesterStore = create<BacktesterStore>((set) => ({
+export const useBacktesterStore = create<BacktesterStore>((set, get) => ({
   backtests: [DEMO_BACKTEST],
   running: false,
   error: null,
 
-  startBacktest: async (strategyName: string, startDate: Date, endDate: Date) => {
+  startBacktest: async (
+    strategyName: string,
+    startDate: Date,
+    endDate: Date,
+  ) => {
     set({ running: true, error: null });
     try {
       // Simulate backtest execution
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      
+
       const newResult: BacktestResults = {
         id: `backtest-${Date.now()}`,
         strategyName,
@@ -89,7 +97,7 @@ export const useBacktesterStore = create<BacktesterStore>((set) => ({
   },
 
   getBacktest: (id: string) => {
-    return useBacktesterStore.getState().backtests.find((b) => b.id === id);
+    return get().backtests.find((b) => b.id === id);
   },
 }));
 
@@ -108,39 +116,55 @@ export function BacktesterPanel() {
     <div className="space-y-4">
       <div className="panel">
         <h2 className="neon-glow text-xl mb-4">⏮️ Backtester</h2>
-        
+
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-slate-800/50 p-3 rounded">
               <p className="text-xs text-slate-400">Total Return</p>
-              <p className={`text-xl font-bold ${latest.totalReturn >= 0 ? "text-green-400" : "text-red-400"}`}>
+              <p
+                className={`text-xl font-bold ${latest.totalReturn >= 0 ? "text-green-400" : "text-red-400"}`}
+              >
                 {latest.totalReturn.toFixed(2)}%
               </p>
             </div>
             <div className="bg-slate-800/50 p-3 rounded">
               <p className="text-xs text-slate-400">Win Rate</p>
-              <p className="text-xl font-bold text-blue-400">{latest.winRate}%</p>
+              <p className="text-xl font-bold text-blue-400">
+                {latest.winRate}%
+              </p>
             </div>
             <div className="bg-slate-800/50 p-3 rounded">
               <p className="text-xs text-slate-400">Sharpe Ratio</p>
-              <p className="text-xl font-bold text-purple-400">{latest.sharpRatio.toFixed(2)}</p>
+              <p className="text-xl font-bold text-purple-400">
+                {latest.sharpRatio.toFixed(2)}
+              </p>
             </div>
             <div className="bg-slate-800/50 p-3 rounded">
               <p className="text-xs text-slate-400">Max Drawdown</p>
-              <p className="text-xl font-bold text-orange-400">{latest.maxDrawdown.toFixed(2)}%</p>
+              <p className="text-xl font-bold text-orange-400">
+                {latest.maxDrawdown.toFixed(2)}%
+              </p>
             </div>
           </div>
 
           <div className="bg-slate-800/50 p-3 rounded text-sm">
             <p className="text-slate-400 mb-1">Latest: {latest.strategyName}</p>
-            <p className="text-xs text-slate-500">Trades: {latest.totalTrades} | Win: {latest.profitableTrades}</p>
+            <p className="text-xs text-slate-500">
+              Trades: {latest.totalTrades} | Win: {latest.profitableTrades}
+            </p>
           </div>
 
-          <Button 
-            size="sm" 
-            className="w-full" 
+          <Button
+            size="sm"
+            className="w-full"
             disabled={running}
-            onClick={() => startBacktest("New Strategy", new Date(Date.now() - 86400000 * 30), new Date())}
+            onClick={() =>
+              startBacktest(
+                "New Strategy",
+                new Date(Date.now() - 86400000 * 30),
+                new Date(),
+              )
+            }
           >
             {running ? "Running..." : "Run Backtest"}
           </Button>

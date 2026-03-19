@@ -2,17 +2,18 @@ import * as React from "react";
 import { cn } from "./lib/utils";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline" | "ghost" | "secondary";
+  variant?: "default" | "outline" | "ghost" | "secondary" | "destructive";
   size?: "default" | "sm" | "lg" | "icon";
 }
 
-const variantClasses = {
+const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
   default:
     "bg-polybloom-neon text-polybloom-dark hover:bg-polybloom-neon/90 font-semibold",
   outline:
     "border border-slate-700 bg-transparent hover:bg-slate-800 text-white",
   ghost: "hover:bg-slate-800 text-white",
   secondary: "bg-slate-700 text-white hover:bg-slate-600",
+  destructive: "bg-red-600 text-white hover:bg-red-500",
 };
 
 const sizeClasses = {

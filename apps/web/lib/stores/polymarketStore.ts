@@ -27,7 +27,10 @@ export const usePolymarketStore = create<PolymarketStore>((set) => ({
       });
     } catch (error) {
       set({
-        error: error instanceof Error ? error.message : "Failed to fetch Polymarket markets",
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch Polymarket markets",
         loading: false,
       });
     }

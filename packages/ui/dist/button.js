@@ -6,6 +6,7 @@ const variantClasses = {
     outline: "border border-slate-700 bg-transparent hover:bg-slate-800 text-white",
     ghost: "hover:bg-slate-800 text-white",
     secondary: "bg-slate-700 text-white hover:bg-slate-600",
+    destructive: "bg-red-600 text-white hover:bg-red-500",
 };
 const sizeClasses = {
     default: "h-10 px-4 py-2",

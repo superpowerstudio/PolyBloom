@@ -46,9 +46,12 @@ export function ClawControlPanel() {
                 <p className="text-xs text-slate-400">{bot.strategy}</p>
                 <div className="mt-2 flex gap-4 text-xs">
                   <span className="text-slate-400">
-                    Balance: <span className="text-white font-mono">${bot.balance}</span>
+                    Balance:{" "}
+                    <span className="text-white font-mono">${bot.balance}</span>
                   </span>
-                  <span className={bot.pnl >= 0 ? "text-green-400" : "text-red-400"}>
+                  <span
+                    className={bot.pnl >= 0 ? "text-green-400" : "text-red-400"}
+                  >
                     P&L: <span className="font-mono">{bot.pnl.toFixed(2)}</span>
                   </span>
                 </div>
@@ -79,7 +82,9 @@ export function ClawControlPanel() {
       {/* Paper Trading Warning */}
       <div className="panel bg-yellow-900/20 border border-yellow-700 text-yellow-400 text-xs">
         <p className="font-semibold">📋 Paper Trading Active</p>
-        <p className="mt-1">All trades are simulated. No real funds are at risk.</p>
+        <p className="mt-1">
+          All trades are simulated. No real funds are at risk.
+        </p>
         <p className="text-yellow-600 mt-2">
           To enable live trading, explicitly change mode and confirm twice.
         </p>

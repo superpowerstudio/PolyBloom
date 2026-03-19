@@ -25,6 +25,17 @@
 
   .panel {
     @apply rounded-lg border border-slate-700 bg-slate-900/50 p-4;
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease;
+    will-change: transform;
+    @apply overflow-auto;
+    resize: vertical;
+    min-height: 160px;
+  }
+
+  .panel:active {
+    @apply scale-95 shadow-lg shadow-polybloom-neon/40;
   }
 
   .command-bar {

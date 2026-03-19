@@ -30,7 +30,7 @@ class PolymarketAPI {
 
   async getMarkets(
     limit: number = 100,
-    offset: number = 0
+    offset: number = 0,
   ): Promise<PolymarketMarket[]> {
     try {
       const response = await axios.get(`${this.baseUrl}/markets`, {

@@ -5,17 +5,20 @@ import { CoingeckoMarket } from "@/lib/stores/marketsStore";
 
 interface MarketTickerProps {
   market: CoingeckoMarket;
+  livePrice?: number;
 }
 
-export function MarketTicker({ market }: MarketTickerProps) {
-  const priceChangeColor = market.price_change_percentage_24h >= 0 ? "text-green-400" : "text-red-400";
-  
+export function MarketTicker({ market, livePrice }: MarketTickerProps) {
+  const displayPrice = livePrice ?? market.current_price;
+  const priceChangeColor =
+    market.price_change_percentage_24h >= 0 ? "text-green-400" : "text-red-400";
+
   const formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
-    maximumFractionDigits: market.current_price < 1 ? 8 : 2,
-  }).format(market.current_price);
+    maximumFractionDigits: displayPrice < 1 ? 8 : 2,
+  }).format(displayPrice);
 
   const formattedChange = `${market.price_change_percentage_24h >= 0 ? "+" : ""}${market.price_change_percentage_24h.toFixed(2)}%`;
 
@@ -34,7 +37,9 @@ export function MarketTicker({ market }: MarketTickerProps) {
       </div>
       <div className="text-right">
         <p className="text-sm font-mono text-white">{formattedPrice}</p>
-        <p className={`text-xs font-mono ${priceChangeColor}`}>{formattedChange}</p>
+        <p className={`text-xs font-mono ${priceChangeColor}`}>
+          {formattedChange}
+        </p>
       </div>
     </div>
   );

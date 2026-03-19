@@ -20,7 +20,7 @@ interface BotStore {
   globalKillSwitch: boolean;
   loading: boolean;
   error: string | null;
-  
+
   createBot: (name: string, strategy: string) => Promise<void>;
   startBot: (botId: string) => Promise<void>;
   stopBot: (botId: string) => Promise<void>;
@@ -37,7 +37,7 @@ const PAPER_BOTS: TradingBot[] = [
     status: "idle",
     mode: "paper",
     balance: 10000,
-    pnl: 247.50,
+    pnl: 247.5,
     pnlPercent: 2.47,
     activeTrades: 0,
     createdAt: Date.now() - 86400000,
@@ -87,7 +87,7 @@ export const useBotStore = create<BotStore>((set, get) => ({
   startBot: async (botId: string) => {
     set((state) => ({
       bots: state.bots.map((bot) =>
-        bot.id === botId ? { ...bot, status: "running" } : bot
+        bot.id === botId ? { ...bot, status: "running" } : bot,
       ),
     }));
   },
@@ -95,7 +95,7 @@ export const useBotStore = create<BotStore>((set, get) => ({
   stopBot: async (botId: string) => {
     set((state) => ({
       bots: state.bots.map((bot) =>
-        bot.id === botId ? { ...bot, status: "stopped" } : bot
+        bot.id === botId ? { ...bot, status: "stopped" } : bot,
       ),
     }));
   },

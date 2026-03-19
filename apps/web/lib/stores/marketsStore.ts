@@ -39,7 +39,7 @@ export const useMarketsStore = create<MarketsStore>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(
-        "https://api.coingecko.com/api/v3/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en"
+        "https://api.coingecko.com/api/v3/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en",
       );
       set({
         markets: response.data,
@@ -48,7 +48,8 @@ export const useMarketsStore = create<MarketsStore>((set) => ({
       });
     } catch (error) {
       set({
-        error: error instanceof Error ? error.message : "Failed to fetch markets",
+        error:
+          error instanceof Error ? error.message : "Failed to fetch markets",
         loading: false,
       });
     }
