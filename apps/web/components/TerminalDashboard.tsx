@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useBotStore } from "@/lib/stores/botStore";
 import { useLayoutStore } from "@/lib/stores/layoutStore";
+import { useMarketsStore } from "@/lib/stores/marketsStore";
 import { PanelGrid } from "@/components/PanelGrid";
 
 export function TerminalDashboard() {
@@ -17,6 +18,8 @@ export function TerminalDashboard() {
     return `${mode} Trading Mode${killSwitch}`;
   }, [paperMode, globalKillSwitch]);
 
+  const { fetchTopMarkets } = useMarketsStore();
+
   const executeCommand = useCallback((cmd: string) => {
     const parts = cmd.trim().toLowerCase().split(" ");
     const command = parts[0];
@@ -25,6 +28,11 @@ export function TerminalDashboard() {
     let output = "";
 
     switch (command) {
+      case "refresh":
+      case "r":
+        fetchTopMarkets();
+        output = "🔄 Refreshing market data...";
+        break;
       case "add":
         if (args[0] === "panel" && args[1]) {
           const panelType = args[1];
@@ -116,6 +124,7 @@ export function TerminalDashboard() {
       <div className="panel border-b-2 border-polybloom-gold">
         <div className="flex items-center justify-between">
           <div>
+            <a href="/" className="text-slate-400 hover:text-white text-sm mb-2 inline-block">← Home</a>
             <h1 className="font-display text-4xl font-bold text-polybloom-white">💹 PolyBloom Terminal</h1>
             <p className="text-polybloom-ice text-sm mt-1 font-display italic">
               Bloomberg-style crypto trading + AI

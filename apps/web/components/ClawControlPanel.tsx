@@ -1,7 +1,7 @@
 "use client";
 
 import { useBotStore } from "@/lib/stores/botStore";
-import { Button } from "ui";
+import { Button } from "@/components/Button";
 
 export function ClawControlPanel() {
   const {

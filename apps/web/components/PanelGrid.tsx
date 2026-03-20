@@ -27,6 +27,8 @@ import { OrderBookPanel } from "@/components/OrderBookPanel";
 import { InsightChatPanel } from "@/components/InsightChatPanel";
 import { ReplayPanel } from "@/components/ReplayPanel";
 import { StudioMonitorPanel } from "@/components/StudioMonitorPanel";
+import { PolymarketPanel } from "@/components/PolymarketPanel";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 function SortablePanel({
   panel,
@@ -66,7 +68,7 @@ function SortablePanel({
         </h3>
         <span className="text-xs text-polybloom-white-dim">drag</span>
       </div>
-      {children}
+      <ErrorBoundary>{children}</ErrorBoundary>
     </div>
   );
 }
@@ -76,7 +78,7 @@ function PanelContent({ panel }: { panel: Panel }) {
     case "markets":
       return <MarketOverviewPanel limit={20} />;
     case "polymarket":
-      return <MarketOverviewPanel limit={20} />;
+      return <PolymarketPanel />;
     case "bot-control":
       return <ClawControlPanel />;
     case "news":

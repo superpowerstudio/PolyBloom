@@ -65,10 +65,38 @@ export const useNewsStore = create<NewsStore>(() => ({
 }));
 
 // Component
-import { Button } from "ui";
+import { Button } from "@/components/Button";
 
 export function NewsRadarPanel() {
-  const { news } = useNewsStore();
+  const { news, loading } = useNewsStore();
+
+  if (loading) {
+    return (
+      <div className="space-y-3">
+        <div className="panel flex items-center justify-between">
+          <h2 className="neon-glow text-xl">📰 News Radar</h2>
+        </div>
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="panel animate-pulse border-l-4 border-slate-700">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
+                <div className="h-3 bg-slate-700 rounded w-1/2 mb-2"></div>
+                <div className="flex gap-2 mt-2">
+                  <div className="h-5 bg-slate-700 rounded w-12"></div>
+                  <div className="h-5 bg-slate-700 rounded w-12"></div>
+                </div>
+              </div>
+              <div className="text-right flex-shrink-0">
+                <div className="h-6 w-6 bg-slate-700 rounded mb-1"></div>
+                <div className="h-3 bg-slate-700 rounded w-12"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   const sentimentColor = (sentiment: string) => {
     switch (sentiment) {

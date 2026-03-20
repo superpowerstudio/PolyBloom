@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useBacktesterStore } from "@/lib/stores/backtesterStore";
-import { Button } from "ui";
+import { Button } from "@/components/Button";
 
 export function BacktesterPanel() {
   const {
