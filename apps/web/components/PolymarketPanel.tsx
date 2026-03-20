@@ -38,8 +38,19 @@ export function PolymarketPanel() {
         <div className="space-y-2">
           {[...Array(5)].map((_, i) => (
             <div key={i} className="panel animate-pulse">
-              <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-slate-700 rounded w-1/2"></div>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <div className="h-4 rounded w-3/4 mb-2" style={{ backgroundColor: '#1C2431' }}></div>
+                  <div className="flex gap-2 mt-1">
+                    <div className="h-5 rounded w-12" style={{ backgroundColor: '#1C2431' }}></div>
+                    <div className="h-5 rounded w-12" style={{ backgroundColor: '#1C2431' }}></div>
+                  </div>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <div className="h-5 rounded w-16 mb-1" style={{ backgroundColor: '#1C2431' }}></div>
+                  <div className="h-3 rounded w-12" style={{ backgroundColor: '#1C2431' }}></div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

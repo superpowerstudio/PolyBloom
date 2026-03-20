@@ -28,7 +28,7 @@ import { InsightChatPanel } from "@/components/InsightChatPanel";
 import { ReplayPanel } from "@/components/ReplayPanel";
 import { StudioMonitorPanel } from "@/components/StudioMonitorPanel";
 import { PolymarketPanel } from "@/components/PolymarketPanel";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 function SortablePanel({
   panel,

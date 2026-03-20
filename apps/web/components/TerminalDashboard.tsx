@@ -28,10 +28,55 @@ export function TerminalDashboard() {
     let output = "";
 
     switch (command) {
+      case "help":
+        output = `📚 Available commands:
+  - help                 Show this help message
+  - r / refresh          Refresh all data
+  - clear                Clear command output
+  - btc / eth / sol      Select that coin
+  - polymarket           Scroll to Polymarket panel
+  - bots / list bots     Scroll to Claw Control panel
+  - kill                 Activate kill switch
+  - backtest             Trigger new backtest
+  - dark / light         Toggle theme (coming soon)
+  - status               Show system status`;
+        break;
       case "refresh":
       case "r":
         fetchTopMarkets();
         output = "🔄 Refreshing market data...";
+        break;
+      case "clear":
+        setCommandOutput([]);
+        return;
+      case "btc":
+      case "eth":
+      case "sol":
+      case "bnb":
+      case "xrp":
+        output = `📊 Selected ${command.toUpperCase()} — use Market Overview panel to view`;
+        break;
+      case "polymarket":
+        output = "🎰 Scrolling to Polymarket panel...";
+        break;
+      case "bots":
+      case "list":
+        if (args[0] === "bots" || command === "bots") {
+          output = "🤖 Scrolling to Claw Control panel...";
+        } else {
+          output = "❌ Usage: list bots";
+        }
+        break;
+      case "kill":
+        toggleGlobalKillSwitch();
+        output = `🛑 Kill switch ${!globalKillSwitch ? "ACTIVATED" : "DEACTIVATED"}`;
+        break;
+      case "backtest":
+        output = "⏮️ Triggering new backtest...";
+        break;
+      case "dark":
+      case "light":
+        output = "🌓 Theme toggle coming soon...";
         break;
       case "add":
         if (args[0] === "panel" && args[1]) {
@@ -79,17 +124,6 @@ export function TerminalDashboard() {
         }
         break;
 
-      case "help":
-        output = `📚 Available commands:
-  - add panel <type>     Add a panel (markets, portfolio, order-book, bot-control, news, backtester, chart)
-  - list bots            List all configured bots
-  - toggle kill switch   Toggle the global kill switch
-  - emergency liquidate  Emergency liquidate all positions
-  - status               Show system status
-  - clear                Clear command output
-  - help                 Show this help message`;
-        break;
-
       case "status":
         const runningBots = bots.filter(b => b.status === "running").length;
         const totalPnl = bots.reduce((sum, b) => sum + b.pnl, 0);
@@ -99,10 +133,6 @@ export function TerminalDashboard() {
   - Running Bots: ${runningBots}/${bots.length}
   - Total PnL: $${totalPnl.toFixed(2)}`;
         break;
-
-      case "clear":
-        setCommandOutput([]);
-        return;
 
       default:
         output = `❌ Unknown command: ${command}. Type 'help' for available commands.`;

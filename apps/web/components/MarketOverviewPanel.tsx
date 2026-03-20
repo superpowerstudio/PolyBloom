@@ -22,8 +22,24 @@ export function MarketOverviewPanel({ limit = 20 }: { limit?: number }) {
   return (
     <div className="space-y-2">
       {loading ? (
-        <div className="panel flex items-center justify-center min-h-32">
-          <p className="text-slate-400">Loading top markets…</p>
+        <div className="space-y-2">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className="panel animate-pulse">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="w-8 h-8 rounded-full" style={{ backgroundColor: '#1C2431' }}></div>
+                  <div>
+                    <div className="h-4 rounded w-16 mb-1" style={{ backgroundColor: '#1C2431' }}></div>
+                    <div className="h-3 rounded w-24" style={{ backgroundColor: '#1C2431' }}></div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="h-4 rounded w-20 mb-1" style={{ backgroundColor: '#1C2431' }}></div>
+                  <div className="h-3 rounded w-12" style={{ backgroundColor: '#1C2431' }}></div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : error ? (
         <div className="panel text-red-400">{error}</div>

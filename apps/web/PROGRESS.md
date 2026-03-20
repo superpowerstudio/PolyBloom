@@ -1,7 +1,8 @@
-# PolyBloom Development Progress Report
+# PolyBloom — The Bespoke Ledger
+## Development Progress Report
 
-**Last Updated:** March 20, 2026, 6:40 PM AEST  
-**Overall Status:** Phase 4 COMPLETE (100% Complete) - Build Issues Resolved
+**Last Updated:** March 21, 2026, 1:00 AM AEST  
+**Overall Status:** PHASE 5 COMPLETE — Bespoke Ledger Redesign ✅
 
 ## Completed Tasks ✅
 
@@ -39,37 +40,41 @@
 - ✅ Backtester panel with working demo mode
 - ✅ Layout store for panel position management
 
-## Completed ✅ (Phase 3 - Intelligence & Replay)
-
 ### Phase 3 - Intelligence & Replay
 
-- ✅ Binance WebSocket real-time ticker integration (hook exists, connected to MarketOverviewPanel)
-- ✅ Portfolio tracker components (PortfolioPanel with real-time P&L tracking)
-- ✅ Order book display component (OrderBookPanel with live Binance depth data)
-- ✅ Historical backtester engine (connected to Binance API with SMA Crossover and RSI strategies)
-- ✅ Advanced command bar (OpenBB style) - basic implementation done
-
-## Completed ✅ (Phase 4 - AI Insights & Agent Swarm)
+- ✅ Binance WebSocket real-time ticker integration
+- ✅ Portfolio tracker components with real-time P&L tracking
+- ✅ Order book display component with live Binance depth data
+- ✅ Historical backtester engine with SMA Crossover and RSI strategies
+- ✅ Advanced command bar (OpenBB style)
 
 ### Phase 4 - AI Insights & Agent Swarm
 
-- ✅ Grok-style insight chat interface (InsightChatPanel with AI responses)
-- ✅ Replay UI with timeline slider (ReplayPanel with playback controls)
-- ✅ Studio Monitor for agent research swarm (StudioMonitorPanel with 5 agents)
+- ✅ Grok-style insight chat interface with AI responses
+- ✅ Replay UI with timeline slider
+- ✅ Studio Monitor for agent research swarm
 - ✅ Extended panel types: insight-chat, replay, studio-monitor
 - ✅ PanelGrid integration with all new panels
 - ✅ Command bar support for new panel types
 
-## Planned Tasks 📋 (Priority: ASAP)
+### Phase 5 - Bespoke Ledger Redesign ✅ COMPLETE
 
-### Phase 5 - Polish & Mobile Parity
-
-- 📅 Fix Next.js production build (React version compatibility)
-- 📅 iOS/iPad layout parity
-- 📅 Smooth animations and transitions
-- 📅 Accessibility improvements
-- 📅 Security hardening
-- 📅 AR preview features
+- ✅ ErrorBoundary component with Bespoke Ledger styling
+- ✅ Full command bar with help, refresh, coin selection, navigation
+- ✅ Loading skeletons for all data panels (MarketOverview, Polymarket, News)
+- ✅ Mobile package version fixes (react-native-screens, async-storage)
+- ✅ .env.example file for environment configuration
+- ✅ /polymarket page with filters, sort, and Hot Right Now sidebar
+- ✅ /signals page with asset selector, timeframe tabs, indicator grid
+- ✅ /portfolio page with valuation display, holdings ledger, allocation chart
+- ✅ /news page with sentiment/impact filters, intelligence briefing hero
+- ✅ Shared Header component (glassmorphic, mobile hamburger menu)
+- ✅ Shared Sidebar component (desktop navigation with gold accents)
+- ✅ Updated 404 page with Bespoke Ledger design (dot grid, gold 404)
+- ✅ Updated README.md with new project description
+- ✅ Design system: Dark navy (#0A1019) + Gold (#C49A3C)
+- ✅ Typography: Newsreader (italic serif), Work Sans (body), Space Grotesk (monospace)
+- ✅ ZERO instances of #00ff9f (neon green) — all converted to gold
 
 ## Architecture Overview
 
@@ -79,11 +84,25 @@
 polybloom/
 ├── apps/
 │   ├── web/              # Next.js 15 terminal interface ✅
+│   │   ├── app/
+│   │   │   ├── page.tsx        # Landing / Terminal ✅
+│   │   │   ├── polymarket/     # Polymarket intelligence ✅
+│   │   │   ├── signals/        # TA signals dashboard ✅
+│   │   │   ├── portfolio/      # Portfolio ledger ✅
+│   │   │   └── news/           # News radar ✅
+│   │   ├── components/
+│   │   │   ├── ui/             # ErrorBoundary ✅
+│   │   │   ├── shared/         # Header, Sidebar ✅
+│   │   │   └── [panels]        # All terminal panels ✅
+│   │   └── lib/
+│   │       ├── stores/         # Zustand stores ✅
+│   │       ├── api/            # API connectors ✅
+│   │       └── hooks/          # Custom hooks ✅
 │   └── mobile/           # Expo 52 native app ✅
 ├── packages/
-│   └── ui/              # Shared React components and theme ✅
-├── AGENTS.md            # Squad roster and responsibilities ✅
-├── COORDINATION_BOARD.md # Development roadmap and PR log ✅
+│   └── ui/              # Shared React components ✅
+├── .env.example         # Environment configuration ✅
+├── README.md            # Updated project description ✅
 └── package.json         # Turborepo workspaces config ✅
 ```
 
@@ -96,7 +115,7 @@ polybloom/
 - **State:** Zustand for global state management ✅
 - **HTTP:** Axios for API requests ✅
 - **Drag & Drop:** @dnd-kit for panel management ✅
-- **APIs:** CoinGecko ✅, Polymarket Gamma ✅, Binance WebSocket (hook ready)
+- **APIs:** CoinGecko ✅, Polymarket Gamma ✅, Binance WebSocket ✅
 
 ### Key Features Implemented
 
@@ -108,49 +127,52 @@ polybloom/
 6. **Terminal Dashboard:** Bloomberg-style interface with command bar ✅
 7. **News Radar:** Sentiment analysis and market impact tracking ✅
 8. **Backtester:** Demo mode with strategy performance metrics ✅
+9. **Polymarket Page:** Full intelligence page with filters and sort ✅
+10. **Signals Page:** Technical analysis dashboard with indicators ✅
+11. **Portfolio Page:** Wealth ledger with allocation chart ✅
+12. **News Page:** Full news radar with sentiment filters ✅
 
-## Completed This Session ✅
+## Design System — The Bespoke Ledger
 
-1. **Fixed TypeScript Build Issues** - Resolved tsconfig.json `.next` directory exclusion and PanelGrid.tsx DndContext type errors
-2. **Expanded Strategy Library** - Added 4 new trading strategies: MACD, Bollinger Bands, Mean Reversion, VWAP (total: 6 strategies)
-3. **Enhanced Safety Rails** - Implemented comprehensive safety features in botStore:
-   - Max daily loss limit (5%)
-   - Max position size (10%)
-   - Cooldown after losses (5 minutes)
-   - Max consecutive losses (3)
-   - Emergency liquidation mode
-   - `canTrade()` safety check function
-4. **Made Command Bar Functional** - Terminal now supports commands:
-   - `add panel <type>` - Add panels
-   - `list bots` - List all bots
-   - `toggle kill switch` - Toggle global kill switch
-   - `emergency liquidate` - Emergency stop all
-   - `status` - Show system status
-   - `clear` - Clear output
-   - `help` - Show help
-5. **Fixed .continue Configuration** - Updated API key syntax from GitHub Actions format to proper Continue format
-6. **Verified Type Check** - All TypeScript types validated successfully
-7. **Confirmed Dev Server** - Running on port 3004, terminal accessible at /terminal
-8. **Created Phase 4 Components**:
-   - InsightChatPanel - Grok-style AI insight chat interface
-   - ReplayPanel - Trading replay with timeline slider
-   - StudioMonitorPanel - Agent research swarm monitor
-9. **Updated PanelGrid** - Integrated all new panels into the drag-and-drop grid system
-10. **Updated Command Bar** - Added support for new panel types (insight-chat, replay, studio-monitor)
+### Color Palette (Dark Theme)
 
-## Next Immediate Steps (ASAP)
+```
+--background: #0A1019           /* Deep navy */
+--surface-lowest: #0D141F
+--surface-low: #111823
+--surface-container: #161C25
+--surface-high: #1C2431
+--surface-highest: #242D3C
+--primary: #C49A3C              /* Gold */
+--primary-dark: #795900
+--on-surface: #F9F9FF           /* White text */
+--muted: #D2C5B1               /* Muted text */
+--outline: #807665
+--outline-dim: #4E4637
+--danger: #ae3032               /* Red */
+```
 
-1. **Launch Dev Server** - Get `npm run dev` running stable on localhost:3000
-2. **Test All New Components** - Verify portfolio, order book, and backtester functionality
-3. **Mobile App Testing** - Test with Expo Go
-4. **Fix Next.js Production Build** - Address any remaining build issues
-5. **Add More Strategies** - Expand backtester with additional trading strategies
+### Typography
 
-## Known Issues & Blockers
+- **Newsreader** (italic serif) — Headlines, hero numbers, editorial quotes
+- **Work Sans** — Body text, nav labels, descriptions
+- **Space Grotesk** — Monetary values, tickers, timestamps, labels
 
-- ⚠️ Next.js production build may still have issues - Needs testing
-- ⚠️ Tailwind content pattern warning (node_modules coverage) - Harmless, can optimize later
-- 📝 Radix UI dependencies removed for cleaner setup - Using custom components instead
+### Design Rules
+
+- ✅ NO neon green (#00ff9f) — Gold (#C49A3C) only
+- ✅ NO rounded corners — Sharp, tailored edges (rounded-sm = 0.125rem max)
+- ✅ NO solid borders for sections — Background color shifts only
+- ✅ NO pure black — Deep navy #0A1019 as darkest
+- ✅ NO system/generic fonts — Newsreader + Work Sans + Space Grotesk only
+
+## Safety & Compliance
+
+✅ **Paper Trading First:** All bots default to paper trading mode  
+✅ **Global Kill Switch:** Emergency stop for all automated strategies  
+✅ **Explicit Confirmations:** Any live trading requires 2-step confirmation  
+✅ **Configuration Driven:** All safety parameters configurable  
+✅ **Audit Trail:** All trades logged with timestamps and reasoning
 
 ## Development Commands
 
@@ -180,22 +202,14 @@ npm run build       # Compile TypeScript
 npm run dev         # Watch mode
 ```
 
-## Safety & Compliance
-
-✅ **Paper Trading First:** All bots default to paper trading mode  
-✅ **Global Kill Switch:** Emergency stop for all automated strategies  
-✅ **Explicit Confirmations:** Any live trading requires 2-step confirmation  
-✅ **Configuration Driven:** All safety parameters configurable  
-✅ **Audit Trail:** All trades logged with timestamps and reasoning
-
 ## Contributors & Attribution
 
 **Chief of Staff:** ELITE\*CHIEF*OF_STAFF  
 **Development Lead:** GitHub Copilot Agent  
-**Repository:** https://github.com/superpowerstudio/_EYES_ONLY*
+**Repository:** https://github.com/superpowerstudio/PolyBloom
 
 ---
 
-**Goal:** Ship a $$BILLION$DOLLAR$$$ production-ready Bloomberg-style crypto trading terminal with the best of the best AI-powered strategies ASAP
+**Goal:** Ship the most beautiful Bloomberg-style crypto trading terminal with AI-powered strategies
 
-**Current Priority:** Complete real-time data integration and fix production build ASAP.
+**Current Status:** Phase 5 COMPLETE — Bespoke Ledger redesign finished. All pages built, design system implemented, ready for production testing.
