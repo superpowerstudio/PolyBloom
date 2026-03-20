@@ -38,7 +38,6 @@ export function TerminalDashboard() {
   - bots / list bots     Scroll to Claw Control panel
   - kill                 Activate kill switch
   - backtest             Trigger new backtest
-  - dark / light         Toggle theme (coming soon)
   - status               Show system status`;
         break;
       case "refresh":
@@ -73,10 +72,6 @@ export function TerminalDashboard() {
         break;
       case "backtest":
         output = "⏮️ Triggering new backtest...";
-        break;
-      case "dark":
-      case "light":
-        output = "🌓 Theme toggle coming soon...";
         break;
       case "add":
         if (args[0] === "panel" && args[1]) {
@@ -139,7 +134,7 @@ export function TerminalDashboard() {
     }
 
     setCommandOutput(prev => [...prev, `> ${cmd}`, output]);
-  }, [bots, globalKillSwitch, paperMode, toggleGlobalKillSwitch, emergencyLiquidate, addPanel]);
+  }, [bots, globalKillSwitch, paperMode, toggleGlobalKillSwitch, emergencyLiquidate, addPanel, fetchTopMarkets]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && commandInput.trim()) {
@@ -148,37 +143,90 @@ export function TerminalDashboard() {
     }
   };
 
+  const buttonStyle = {
+    fontFamily: 'Space Grotesk, monospace',
+    fontSize: '0.625rem',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.1em',
+    padding: '0.5rem 0.75rem',
+    borderRadius: '0.125rem',
+    transition: 'all 0.2s',
+  };
+
   return (
-    <div className="min-h-screen bg-polybloom-dark p-4 space-y-4">
+    <div className="min-h-screen p-4 space-y-4" style={{ backgroundColor: '#0A1019' }}>
       {/* Header */}
-      <div className="panel border-b-2 border-polybloom-gold">
+      <div className="p-4" style={{ backgroundColor: '#111823', borderBottom: '1px solid #1C2431' }}>
         <div className="flex items-center justify-between">
           <div>
-            <a href="/" className="text-slate-400 hover:text-white text-sm mb-2 inline-block">← Home</a>
-            <h1 className="font-display text-4xl font-bold text-polybloom-white">💹 PolyBloom Terminal</h1>
-            <p className="text-polybloom-ice text-sm mt-1 font-display italic">
+            <a 
+              href="/" 
+              style={{ 
+                fontFamily: 'Space Grotesk, monospace',
+                fontSize: '0.75rem',
+                color: '#807665',
+                display: 'inline-block',
+                marginBottom: '0.5rem',
+              }}
+            >
+              ← Home
+            </a>
+            <h1 
+              style={{ 
+                fontFamily: 'Newsreader, serif',
+                fontStyle: 'italic',
+                fontSize: '2rem',
+                color: '#C49A3C',
+                fontWeight: 400,
+              }}
+            >
+              PolyBloom Terminal
+            </h1>
+            <p 
+              style={{ 
+                fontFamily: 'Work Sans, sans-serif',
+                fontSize: '0.875rem',
+                color: '#D2C5B1',
+                marginTop: '0.25rem',
+              }}
+            >
               Bloomberg-style crypto trading + AI
             </p>
           </div>
           <div className="flex gap-2">
             <button
-              className="h-9 px-3 rounded-md border border-polybloom-gold/20 bg-transparent text-polybloom-white hover:bg-polybloom-gold/10"
+              style={{
+                ...buttonStyle,
+                backgroundColor: 'transparent',
+                color: '#F9F9FF',
+                border: '1px solid #1C2431',
+              }}
               type="button"
               onClick={() => window.location.reload()}
             >
               🔄 Refresh
             </button>
             <button
-              className="h-9 px-3 rounded-md border border-polybloom-gold/20 bg-transparent text-polybloom-white hover:bg-polybloom-gold/10"
+              style={{
+                ...buttonStyle,
+                backgroundColor: 'transparent',
+                color: '#F9F9FF',
+                border: '1px solid #1C2431',
+              }}
               type="button"
               onClick={() => executeCommand("status")}
             >
               ⚙️ Status
             </button>
             <button
-              className="h-9 px-3 rounded-md border border-polybloom-red/20 bg-transparent text-polybloom-red hover:bg-polybloom-red/10"
+              style={{
+                ...buttonStyle,
+                backgroundColor: globalKillSwitch ? '#ae3032' : 'transparent',
+                color: globalKillSwitch ? '#F9F9FF' : '#ae3032',
+                border: `1px solid ${globalKillSwitch ? '#ae3032' : '#1C2431'}`,
+              }}
               type="button"
-              onClick={() => executeCommand("toggle kill switch")}
+              onClick={() => executeCommand("kill")}
             >
               🛑 Kill Switch
             </button>
@@ -190,14 +238,36 @@ export function TerminalDashboard() {
       <PanelGrid />
 
       {/* Bottom - Command Bar */}
-      <div className="panel font-mono text-sm border-t border-polybloom-gold/15">
-        <p className="text-polybloom-gold mb-2 font-mono text-xs tracking-widest uppercase">💬 Command Bar</p>
+      <div className="p-4" style={{ backgroundColor: '#111823', borderTop: '1px solid #1C2431' }}>
+        <p 
+          style={{ 
+            fontFamily: 'Space Grotesk, monospace',
+            fontSize: '0.625rem',
+            color: '#C49A3C',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            marginBottom: '0.5rem',
+          }}
+        >
+          💬 Command Bar
+        </p>
         
         {/* Command Output */}
         {commandOutput.length > 0 && (
-          <div className="bg-polybloom-navy-mid/50 p-3 rounded mb-3 max-h-40 overflow-y-auto">
+          <div 
+            className="p-3 mb-3 max-h-40 overflow-y-auto"
+            style={{ backgroundColor: '#0D141F', borderRadius: '0.125rem' }}
+          >
             {commandOutput.map((line, i) => (
-              <div key={i} className={`${line.startsWith(">") ? "text-polybloom-gold" : "text-polybloom-white-dim"} whitespace-pre-wrap`}>
+              <div 
+                key={i} 
+                style={{ 
+                  fontFamily: 'Space Grotesk, monospace',
+                  fontSize: '0.75rem',
+                  color: line.startsWith(">") ? "#C49A3C" : "#D2C5B1",
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
                 {line}
               </div>
             ))}
@@ -210,16 +280,28 @@ export function TerminalDashboard() {
           value={commandInput}
           onChange={(e) => setCommandInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="> Type a command (e.g., 'add panel market-overview', 'list bots', 'help')"
-          className="w-full bg-transparent text-polybloom-white outline-none focus:ring-2 focus:ring-polybloom-gold/50 px-2 py-1 rounded"
+          placeholder="> Type a command (e.g., 'add panel markets', 'list bots', 'help')"
+          className="w-full outline-none px-2 py-1"
+          style={{
+            fontFamily: 'Space Grotesk, monospace',
+            fontSize: '0.75rem',
+            backgroundColor: 'transparent',
+            color: '#F9F9FF',
+            borderRadius: '0.125rem',
+          }}
         />
       </div>
 
       {/* Footer */}
-      <div className="text-center text-polybloom-white-dim text-xs py-4 font-mono">
-        <p>
-          PolyBloom Terminal v0.2 | {statusText} | Built with
-          Next.js+React+Tailwind
+      <div className="text-center py-4" style={{ borderTop: '1px solid #1C2431' }}>
+        <p
+          style={{
+            fontFamily: 'Space Grotesk, monospace',
+            fontSize: '0.625rem',
+            color: '#4E4637',
+          }}
+        >
+          PolyBloom Terminal v0.2 | {statusText} | The Bespoke Ledger
         </p>
       </div>
     </div>

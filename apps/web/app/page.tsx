@@ -1,71 +1,183 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Home() {
+  const features = [
+    { icon: "📊", title: "Live Markets", desc: "Real-time data from CoinGecko and Binance" },
+    { icon: "🎰", title: "Polymarket", desc: "Prediction markets and CLOB trading" },
+    { icon: "🤖", title: "AI Agents", desc: "Trading strategies, paper-trading by default" },
+    { icon: "📰", title: "News Radar", desc: "Headlines with sentiment analysis" },
+    { icon: "⏮️", title: "Backtester", desc: "Historical simulation and strategy replay" },
+    { icon: "🎨", title: "Multi-Panel Grid", desc: "Drag, resize and dock panels" },
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0a0a] via-slate-900 to-[#0a0a0a]">
-      <div className="text-center mb-12">
-        <h1 className="text-6xl font-bold mb-4">
-          <span className="text-white">PolyBloom</span>
-          <br />
-          <span className="text-[#00ff9f]">Terminal</span>
-        </h1>
-        <p className="text-slate-400 text-xl mb-8">
-          Ultimate Crypto Bloomberg Terminal + AI Trading Studio
-        </p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mb-12">
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">📊 Live Markets</h3>
-          <p className="text-slate-300 text-sm">
-            Real-time data from CoinGecko and Binance
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#0A1019' }}>
+      {/* Forensic Dot Grid */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: "radial-gradient(circle, #C49A3C 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10">
+        <div className="text-center mb-12">
+          <p
+            style={{
+              fontFamily: 'Space Grotesk, monospace',
+              fontSize: '0.75rem',
+              color: '#807665',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '1rem',
+            }}
+          >
+            THE BESPOKE LEDGER / GRAND OPUS PROTOCOL
+          </p>
+          <h1
+            style={{
+              fontFamily: 'Newsreader, serif',
+              fontStyle: 'italic',
+              fontSize: '4rem',
+              color: '#C49A3C',
+              fontWeight: 400,
+              lineHeight: 1.1,
+              marginBottom: '1rem',
+            }}
+          >
+            PolyBloom
+          </h1>
+          <p
+            style={{
+              fontFamily: 'Work Sans, sans-serif',
+              fontSize: '1.125rem',
+              color: '#D2C5B1',
+              maxWidth: '500px',
+              margin: '0 auto',
+              lineHeight: 1.6,
+            }}
+          >
+            Private-grade crypto intelligence & Polymarket terminal
           </p>
         </div>
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">🎰 Polymarket</h3>
-          <p className="text-slate-300 text-sm">
-            Prediction markets and CLOB trading
-          </p>
+
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mb-12">
+          {features.map((f, i) => (
+            <div
+              key={i}
+              className="p-4"
+              style={{
+                backgroundColor: '#111823',
+                border: '1px solid #1C2431',
+                borderRadius: '0.125rem',
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span style={{ fontSize: '1.25rem' }}>{f.icon}</span>
+                <h3
+                  style={{
+                    fontFamily: 'Space Grotesk, monospace',
+                    fontSize: '0.75rem',
+                    color: '#C49A3C',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  {f.title}
+                </h3>
+              </div>
+              <p
+                style={{
+                  fontFamily: 'Work Sans, sans-serif',
+                  fontSize: '0.875rem',
+                  color: '#D2C5B1',
+                  lineHeight: 1.5,
+                }}
+              >
+                {f.desc}
+              </p>
+            </div>
+          ))}
         </div>
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">🤖 OpenClaw</h3>
-          <p className="text-slate-300 text-sm">
-            AI trading strategies, paper-trading by default
-          </p>
-        </div>
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">📰 News Radar</h3>
-          <p className="text-slate-300 text-sm">
-            Headlines with sentiment analysis
-          </p>
-        </div>
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">⏮️ Backtester</h3>
-          <p className="text-slate-300 text-sm">
-            Historical simulation and strategy replay
-          </p>
-        </div>
-        <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-          <h3 className="text-[#00ff9f] font-semibold mb-2">
-            🎨 Multi-Panel Grid
-          </h3>
-          <p className="text-slate-300 text-sm">Drag, resize and dock panels</p>
-        </div>
-      </div>
-      <div className="flex gap-4">
-        <a href="/terminal">
-          <button className="bg-[#00ff9f] text-black font-semibold px-8 py-3 rounded-lg hover:bg-[#00cc7a] transition-colors">
+
+        {/* CTA Buttons */}
+        <div className="flex gap-4">
+          <Link
+            href="/terminal"
+            className="px-8 py-3 transition-colors"
+            style={{
+              fontFamily: 'Space Grotesk, monospace',
+              fontSize: '0.75rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              backgroundColor: '#C49A3C',
+              color: '#0A1019',
+              borderRadius: '0.125rem',
+            }}
+          >
             Launch Terminal →
-          </button>
-        </a>
-        <a href="/docs">
-          <button className="border border-slate-700 text-white font-semibold px-8 py-3 rounded-lg hover:bg-slate-800 transition-colors">
-            Documentation
-          </button>
-        </a>
+          </Link>
+          <Link
+            href="/polymarket"
+            className="px-8 py-3 transition-colors"
+            style={{
+              fontFamily: 'Space Grotesk, monospace',
+              fontSize: '0.75rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: '#C49A3C',
+              border: '1px solid #C49A3C',
+              borderRadius: '0.125rem',
+            }}
+          >
+            Polymarket
+          </Link>
+        </div>
+
+        {/* Page Links */}
+        <div className="flex gap-6 mt-8">
+          {[
+            { href: '/signals', label: 'Signals' },
+            { href: '/portfolio', label: 'Portfolio' },
+            { href: '/news', label: 'News' },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                fontFamily: 'Space Grotesk, monospace',
+                fontSize: '0.75rem',
+                color: '#807665',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="mt-16 pt-8 border-t border-slate-700 w-full text-center text-slate-500">
-        <p className="text-sm">
-          Built with Next.js 15, Expo 52, and powered by crypto x AI 🚀
+
+      {/* Footer */}
+      <div
+        className="py-6 text-center"
+        style={{ borderTop: '1px solid #1C2431' }}
+      >
+        <p
+          style={{
+            fontFamily: 'Space Grotesk, monospace',
+            fontSize: '0.625rem',
+            color: '#4E4637',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}
+        >
+          Built with Next.js 15, Expo 52 · The Bespoke Ledger Design System
         </p>
       </div>
     </div>
