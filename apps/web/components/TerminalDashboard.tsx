@@ -28,9 +28,24 @@ export function TerminalDashboard() {
       case "add":
         if (args[0] === "panel" && args[1]) {
           const panelType = args[1];
-          const validTypes = ["markets", "portfolio", "order-book", "bot-control", "news", "backtester", "chart", "insight-chat", "replay", "studio-monitor"];
+          const validTypes = ["markets", "portfolio", "order-book", "bot-control", "news", "backtester", "chart", "insight-chat", "replay", "studio-monitor", "polymarket", "polymarket-trading", "polymarket-portfolio"];
           if (validTypes.includes(panelType)) {
-            const title = panelType.charAt(0).toUpperCase() + panelType.slice(1).replace("-", " ");
+            const titleMap: Record<string, string> = {
+              "markets": "Markets",
+              "portfolio": "Portfolio",
+              "order-book": "Order Book",
+              "bot-control": "Bot Control",
+              "news": "News Radar",
+              "backtester": "Backtester",
+              "chart": "Chart",
+              "insight-chat": "Insight Chat",
+              "replay": "Replay",
+              "studio-monitor": "Studio Monitor",
+              "polymarket": "Polymarket Order Book",
+              "polymarket-trading": "Polymarket Trading",
+              "polymarket-portfolio": "Polymarket Portfolio",
+            };
+            const title = titleMap[panelType] || panelType;
             addPanel(panelType as any, title);
             output = `✅ Added ${panelType} panel`;
           } else {
@@ -73,7 +88,9 @@ export function TerminalDashboard() {
 
       case "help":
         output = `📚 Available commands:
-  - add panel <type>     Add a panel (markets, portfolio, order-book, bot-control, news, backtester, chart)
+  - add panel <type>     Add a panel to the dashboard
+    Panel types: markets, portfolio, order-book, bot-control, news, backtester, chart, 
+                 insight-chat, replay, studio-monitor, polymarket, polymarket-trading, polymarket-portfolio
   - list bots            List all configured bots
   - toggle kill switch   Toggle the global kill switch
   - emergency liquidate  Emergency liquidate all positions

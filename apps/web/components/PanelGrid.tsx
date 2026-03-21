@@ -13,7 +13,7 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLayoutStore, Panel } from "@/lib/stores/layoutStore";
 
 // Fix for @dnd-kit React 18 type compatibility
@@ -27,6 +27,9 @@ import { OrderBookPanel } from "@/components/OrderBookPanel";
 import { InsightChatPanel } from "@/components/InsightChatPanel";
 import { ReplayPanel } from "@/components/ReplayPanel";
 import { StudioMonitorPanel } from "@/components/StudioMonitorPanel";
+import { PolymarketOrderBookPanel } from "@/components/PolymarketOrderBookPanel";
+import { PolymarketTradingPanel } from "@/components/PolymarketTradingPanel";
+import { PolymarketPortfolioPanel } from "@/components/PolymarketPortfolioPanel";
 
 function SortablePanel({
   panel,
@@ -76,7 +79,11 @@ function PanelContent({ panel }: { panel: Panel }) {
     case "markets":
       return <MarketOverviewPanel limit={20} />;
     case "polymarket":
-      return <MarketOverviewPanel limit={20} />;
+      return <PolymarketOrderBookPanel />;
+    case "polymarket-trading":
+      return <PolymarketTradingPanel />;
+    case "polymarket-portfolio":
+      return <PolymarketPortfolioPanel />;
     case "bot-control":
       return <ClawControlPanel />;
     case "news":
@@ -111,6 +118,17 @@ function PanelContent({ panel }: { panel: Panel }) {
 export function PanelGrid() {
   const panels = useLayoutStore((state) => state.panels);
   const movePanel = useLayoutStore((state) => state.movePanel);
+  const _hydrateLayout = useLayoutStore((state) => state._hydrateLayout);
+  const _isHydrated = useLayoutStore((state) => state._isHydrated);
+  const [isClient, setIsClient] = useState(false);
+
+  // Set isClient to true after hydration to avoid SSR mismatch
+  useEffect(() => {
+    setIsClient(true);
+    if (!_isHydrated) {
+      _hydrateLayout();
+    }
+  }, [_hydrateLayout, _isHydrated]);
 
   const orderedPanels = useMemo(
     () => [...panels].sort((a, b) => a.position - b.position),
@@ -131,6 +149,24 @@ export function PanelGrid() {
 
     movePanel(oldIndex, newIndex);
   };
+
+  // Render static grid on server, drag-and-drop on client
+  if (!isClient) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {orderedPanels.map((panel) => (
+          <div key={panel.id} className="panel">
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <h3 className="text-base font-semibold text-polybloom-gold font-display">
+                {panel.title}
+              </h3>
+            </div>
+            <PanelContent panel={panel} />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <DndContextFixed sensors={sensors} onDragEnd={handleDragEnd}>
