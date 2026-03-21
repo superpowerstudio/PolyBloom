@@ -33,6 +33,7 @@ export interface Panel {
 
 interface LayoutStore {
   panels: Panel[];
+  _hydrateLayout: () => void;
   addPanel: (type: PanelType, title: string) => void;
   removePanel: (id: string) => void;
   updatePanel: (id: string, updates: Partial<Panel>) => void;
@@ -95,7 +96,6 @@ const DEFAULT_PANELS: Panel[] = [
 ];
 
 function loadPersistedLayout(): Panel[] {
-  if (typeof window === "undefined") return DEFAULT_PANELS;
   try {
     const raw = window.localStorage.getItem(LAYOUT_STORAGE_KEY);
     if (!raw) return DEFAULT_PANELS;
@@ -108,7 +108,6 @@ function loadPersistedLayout(): Panel[] {
 }
 
 function persistLayout(panels: Panel[]) {
-  if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(panels));
   } catch {
@@ -117,7 +116,18 @@ function persistLayout(panels: Panel[]) {
 }
 
 export const useLayoutStore = create<LayoutStore>((set) => ({
-  panels: loadPersistedLayout(),
+  // Start with DEFAULT_PANELS, will be hydrated on client
+  panels: DEFAULT_PANELS,
+  _isHydrated: false,
+  
+  // Load persisted layout - call this to sync with localStorage
+  _hydrateLayout: () => {
+    set((state) => {
+      if (state._isHydrated) return {};
+      const persisted = loadPersistedLayout();
+      return { panels: persisted, _isHydrated: true };
+    });
+  },
 
   addPanel: (type: PanelType, title: string) => {
     set((state) => {

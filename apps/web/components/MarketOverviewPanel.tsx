@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMarketsStore } from "@/lib/stores/marketsStore";
 import { MarketTicker } from "@/components/MarketTicker";
 import { useBinanceMiniTicker } from "@/hooks/useBinanceMiniTicker";
 
 export function MarketOverviewPanel({ limit = 20 }: { limit?: number }) {
   const { markets, loading, error, fetchTopMarkets } = useMarketsStore();
+  const [isClient, setIsClient] = useState(false);
 
+  // Set isClient to true after hydration to avoid SSR mismatch
   useEffect(() => {
+    setIsClient(true);
     fetchTopMarkets();
   }, [fetchTopMarkets]);
 
@@ -18,6 +21,17 @@ export function MarketOverviewPanel({ limit = 20 }: { limit?: number }) {
   );
 
   const tickers = useBinanceMiniTicker(symbols);
+
+  // Render empty state on server, full state on client
+  if (!isClient) {
+    return (
+      <div className="space-y-2">
+        <div className="panel flex items-center justify-center min-h-32">
+          <p className="text-slate-400">Loading top markets…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-2">
