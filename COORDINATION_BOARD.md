@@ -6,7 +6,7 @@
 **Next Target:** MarketGhost live data feed  
 
 **Owner:** ELITE_CHIEF_OF_STAFF  
-**Repo:** `superpowerstudio/_EYES_ONLY_`  
+**Repo:** `superpowerstudio/PolyBloom`
 **Branch policy:** feature branches only, PRs into `main`, never push directly to `main`.
 
 ---
