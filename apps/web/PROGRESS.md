@@ -1,6 +1,8 @@
-# PolyBloom Web App Progress
+# PolyBloom — The Bespoke Ledger
+## Development Progress Report
 
-## Latest Update: Polymarket CLI Integration Complete (2026-03-21)
+**Last Updated:** March 21, 2026, 1:00 AM AEST
+**Overall Status:** PHASE 5 COMPLETE — Bespoke Ledger Redesign ✅
 
 ### What Was Built
 

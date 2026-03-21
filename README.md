@@ -1,13 +1,39 @@
-# PolyBloom – Ultimate Crypto Bloomberg Terminal + AI Trading Studio
+# PolyBloom — The Bespoke Ledger
 
-Bootstrap init for the autonomous Cursor Cloud Agents swarm build.
+> Private-grade crypto intelligence & Polymarket terminal
 
-**Vision:** Modern Bloomberg-style command center for crypto + Polymarket + OpenClaw trading bots.  
-Full live data, draggable neon-green panels, native iOS app, self-improving agent team.
+**The most beautiful Bloomberg-style terminal for Polymarket + Crypto.**
+Built with Next.js 15, Expo 52, TypeScript, and the Bespoke Ledger design system.
 
-**Current Phase:** v0 – Repo bootstrap & SWAT team coordination setup  
-**Repo:** https://github.com/superpowerstudio/PolyBloom
+## Features
+- 📊 Live crypto market data (CoinGecko + Binance WebSocket)
+- 🎰 Polymarket intelligence — real-time prediction markets
+- 🤖 AI trading agents (paper-trading safe by default)
+- 📰 News radar with sentiment analysis
+- ⏮️ Strategy backtester
+- 🐋 Whale tracker
+- 📱 iOS/iPad app (Expo 52)
 
-**Next:** Chief agent spawns, creates COORDINATION_BOARD.md + AGENTS.md, outputs specialist prompts.
+## Quick Start
+```bash
+git clone https://github.com/superpowerstudio/PolyBloom.git
+cd PolyBloom
+npm install
+npm run dev
+```
 
-Let's ship nuclear while free window open. 🚀🪖📈
+Open http://localhost:3000
+
+## Design System
+The Bespoke Ledger — inspired by private wealth offices, Swiss precision, and editorial finance.
+Dark navy (#0A1019) + Gold (#C49A3C) + Newsreader + Work Sans + Space Grotesk.
+
+## Stack
+- **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS
+- **State**: Zustand
+- **Mobile**: Expo 52 (React Native)
+- **APIs**: CoinGecko, Binance WebSocket, Polymarket Gamma/CLOB
+- **Monorepo**: Turborepo
+
+## License
+MIT

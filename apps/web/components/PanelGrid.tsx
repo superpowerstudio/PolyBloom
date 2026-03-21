@@ -30,6 +30,7 @@ import { StudioMonitorPanel } from "@/components/StudioMonitorPanel";
 import { PolymarketOrderBookPanel } from "@/components/PolymarketOrderBookPanel";
 import { PolymarketTradingPanel } from "@/components/PolymarketTradingPanel";
 import { PolymarketPortfolioPanel } from "@/components/PolymarketPortfolioPanel";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 function SortablePanel({
   panel,
@@ -69,7 +70,7 @@ function SortablePanel({
         </h3>
         <span className="text-xs text-polybloom-white-dim">drag</span>
       </div>
-      {children}
+      <ErrorBoundary>{children}</ErrorBoundary>
     </div>
   );
 }
