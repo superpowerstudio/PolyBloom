@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import axios from "axios";
 
 export interface CoingeckoMarket {
   id: string;
@@ -38,11 +37,21 @@ export const useMarketsStore = create<MarketsStore>((set) => ({
   fetchTopMarkets: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get(
-        "https://api.coingecko.com/api/v3/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en",
-      );
+      const params = new URLSearchParams({
+        vs_currency: "usd",
+        order: "market_cap_desc",
+        per_page: "100",
+        page: "1",
+        sparkline: "true",
+        locale: "en",
+      });
+      const response = await fetch(`/api/coingecko/coins/markets?${params}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch markets: ${response.status}`);
+      }
+      const data = await response.json();
       set({
-        markets: response.data,
+        markets: data,
         loading: false,
         lastUpdated: Date.now(),
       });

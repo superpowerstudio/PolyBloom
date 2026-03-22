@@ -68,23 +68,21 @@ export interface PortfolioValue {
 }
 
 class PolymarketAPI {
-  private baseUrl = "https://gamma-api.polymarket.com";
   private cliBaseUrl = "/api/polymarket";
 
-  // ==================== GAMMA API (Direct) ====================
+  // ==================== GAMMA API (Via Next.js Routes) ====================
 
   async getMarkets(
     limit: number = 100,
     offset: number = 0,
   ): Promise<PolymarketMarket[]> {
     try {
-      const response = await axios.get(`${this.baseUrl}/markets`, {
-        params: {
-          limit,
-          offset,
-          active: true,
-        },
+      const params = new URLSearchParams({
+        limit: String(limit),
+        offset: String(offset),
+        active: "true",
       });
+      const response = await axios.get(`${this.cliBaseUrl}/markets?${params}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching Polymarket markets:", error);
@@ -94,7 +92,7 @@ class PolymarketAPI {
 
   async getMarketById(marketId: string): Promise<PolymarketMarket> {
     try {
-      const response = await axios.get(`${this.baseUrl}/markets/${marketId}`);
+      const response = await axios.get(`${this.cliBaseUrl}/markets/${marketId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching Polymarket market:", error);
@@ -104,12 +102,11 @@ class PolymarketAPI {
 
   async searchMarkets(keyword: string): Promise<PolymarketMarket[]> {
     try {
-      const response = await axios.get(`${this.baseUrl}/markets`, {
-        params: {
-          search_term: keyword,
-          limit: 50,
-        },
+      const params = new URLSearchParams({
+        search_term: keyword,
+        limit: "50",
       });
+      const response = await axios.get(`${this.cliBaseUrl}/markets?${params}`);
       return response.data;
     } catch (error) {
       console.error("Error searching Polymarket markets:", error);

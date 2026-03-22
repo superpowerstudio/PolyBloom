@@ -3,9 +3,10 @@ import { polymarketCli } from "@/lib/services/polymarketCliService";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const path = params.path;
+  const resolvedParams = await params;
+  const path = resolvedParams.path;
   const searchParams = request.nextUrl.searchParams;
 
   try {
@@ -289,9 +290,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const path = params.path;
+  const resolvedParams = await params;
+  const path = resolvedParams.path;
 
   try {
     const body = await request.json();

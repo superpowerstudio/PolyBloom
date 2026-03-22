@@ -1,27 +1,211 @@
+/* PolyBloom Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* PolyBloom CSS Variables */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --polybloom-dark: #0a1019;
+  --polybloom-navy-mid: #111827;
+  --polybloom-navy-light: #1a2332;
+  --polybloom-gold: #c49a3c;
+  --polybloom-gold-dim: #a07d2e;
+  --polybloom-gold-bright: #dbb44c;
+  --polybloom-ice: #7ba7c2;
+  --polybloom-ice-dim: #5a8aa8;
+  --polybloom-ice-bright: #9dc2d8;
+  --polybloom-red: #c44040;
+  --polybloom-white: #e8e4dc;
+  --polybloom-white-dim: #b0a898;
+  --polybloom-neon: #c49a3c;
+  --polybloom-accent: #7ba7c2;
+  
+  /* Background colors */
+  --background-primary: #0A1019;
+  --background-secondary: #111823;
+  --background-tertiary: #1C2431;
+  
+  /* Text colors */
+  --text-primary: #F9F9FF;
+  --text-secondary: #D2C5B1;
+  --text-dim: #807665;
+  --text-muted: #4E4637;
+  
+  /* Border colors */
+  --border-primary: #1C2431;
+  --border-secondary: #2A3441;
+  
+  /* Font families */
+  --font-display: 'Newsreader', serif;
+  --font-mono: 'Space Grotesk', monospace;
+  --font-body: 'Work Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Panel Component Styles */
+.panel {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.125rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.panel:hover {
+  border-color: var(--border-secondary);
+}
+
+/* Typography Classes */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Text Color Classes */
+.text-polybloom-gold {
+  color: var(--polybloom-gold);
+}
+
+.text-polybloom-white {
+  color: var(--text-primary);
+}
+
+.text-polybloom-white-dim {
+  color: var(--text-dim);
+}
+
+.text-polybloom-ice {
+  color: var(--polybloom-ice);
+}
+
+.text-polybloom-red {
+  color: var(--polybloom-red);
+}
+
+/* Neon Text Effects */
+.neon-text {
+  color: var(--polybloom-gold);
+  text-shadow: 0 0 10px rgba(196, 154, 60, 0.3);
+}
+
+.neon-glow {
+  color: var(--polybloom-gold);
+  text-shadow: 
+    0 0 5px rgba(196, 154, 60, 0.5),
+    0 0 10px rgba(196, 154, 60, 0.3),
+    0 0 20px rgba(196, 154, 60, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-tertiary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--polybloom-gold-dim);
+}
+
+/* Animation Classes */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--polybloom-gold);
+  outline-offset: 2px;
+}
+
+/* Selection Styles */
+::selection {
+  background-color: rgba(196, 154, 60, 0.3);
+  color: var(--text-primary);
+}
+
+/* Utility Classes */
+.bg-polybloom-dark {
+  background-color: var(--background-primary);
+}
+
+.bg-polybloom-navy-mid {
+  background-color: var(--background-secondary);
+}
+
+.bg-polybloom-navy-light {
+  background-color: var(--background-tertiary);
+}
+
+.border-polybloom-neon {
+  border-color: var(--polybloom-gold);
+}
+
+/* Grid Layout Utilities */
+.grid-cols-auto {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Spacing Utilities */
+.gap-gutter {
+  gap: 1rem;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 13px;
+  }
 }

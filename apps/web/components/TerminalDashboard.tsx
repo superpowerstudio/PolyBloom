@@ -159,7 +159,7 @@ export function TerminalDashboard() {
   };
 
   const buttonStyle = {
-    fontFamily: 'Space Grotesk, monospace',
+    fontFamily: 'var(--font-mono)',
     fontSize: '0.625rem',
     textTransform: 'uppercase' as const,
     letterSpacing: '0.1em',
@@ -169,17 +169,16 @@ export function TerminalDashboard() {
   };
 
   return (
-    <div className="min-h-screen p-4 space-y-4" style={{ backgroundColor: '#0A1019' }}>
+    <div className="min-h-screen p-4 space-y-4 bg-polybloom-dark">
       {/* Header */}
-      <div className="p-4" style={{ backgroundColor: '#111823', borderBottom: '1px solid #1C2431' }}>
+      <div className="p-4 bg-polybloom-navy-mid" style={{ borderBottom: '1px solid var(--border-primary)' }}>
         <div className="flex items-center justify-between">
           <div>
             <a 
               href="/" 
+              className="font-mono text-polybloom-white-dim"
               style={{ 
-                fontFamily: 'Space Grotesk, monospace',
                 fontSize: '0.75rem',
-                color: '#807665',
                 display: 'inline-block',
                 marginBottom: '0.5rem',
               }}
@@ -187,21 +186,19 @@ export function TerminalDashboard() {
               ← Home
             </a>
             <h1 
+              className="font-display neon-glow"
               style={{ 
-                fontFamily: 'Newsreader, serif',
                 fontStyle: 'italic',
                 fontSize: '2rem',
-                color: '#C49A3C',
                 fontWeight: 400,
               }}
             >
               PolyBloom Terminal
             </h1>
             <p 
+              className="font-body text-polybloom-white"
               style={{ 
-                fontFamily: 'Work Sans, sans-serif',
                 fontSize: '0.875rem',
-                color: '#D2C5B1',
                 marginTop: '0.25rem',
               }}
             >
@@ -210,11 +207,11 @@ export function TerminalDashboard() {
           </div>
           <div className="flex gap-2">
             <button
+              className="text-polybloom-white"
               style={{
                 ...buttonStyle,
                 backgroundColor: 'transparent',
-                color: '#F9F9FF',
-                border: '1px solid #1C2431',
+                border: '1px solid var(--border-primary)',
               }}
               type="button"
               onClick={() => window.location.reload()}
@@ -222,11 +219,11 @@ export function TerminalDashboard() {
               🔄 Refresh
             </button>
             <button
+              className="text-polybloom-white"
               style={{
                 ...buttonStyle,
                 backgroundColor: 'transparent',
-                color: '#F9F9FF',
-                border: '1px solid #1C2431',
+                border: '1px solid var(--border-primary)',
               }}
               type="button"
               onClick={() => executeCommand("status")}
@@ -234,11 +231,11 @@ export function TerminalDashboard() {
               ⚙️ Status
             </button>
             <button
+              className={globalKillSwitch ? "text-polybloom-white" : "text-polybloom-red"}
               style={{
                 ...buttonStyle,
-                backgroundColor: globalKillSwitch ? '#ae3032' : 'transparent',
-                color: globalKillSwitch ? '#F9F9FF' : '#ae3032',
-                border: `1px solid ${globalKillSwitch ? '#ae3032' : '#1C2431'}`,
+                backgroundColor: globalKillSwitch ? 'var(--polybloom-red)' : 'transparent',
+                border: `1px solid ${globalKillSwitch ? 'var(--polybloom-red)' : 'var(--border-primary)'}`,
               }}
               type="button"
               onClick={() => executeCommand("kill")}
@@ -253,12 +250,11 @@ export function TerminalDashboard() {
       <PanelGrid />
 
       {/* Bottom - Command Bar */}
-      <div className="p-4" style={{ backgroundColor: '#111823', borderTop: '1px solid #1C2431' }}>
+      <div className="p-4 bg-polybloom-navy-mid" style={{ borderTop: '1px solid var(--border-primary)' }}>
         <p 
+          className="font-mono text-polybloom-gold"
           style={{ 
-            fontFamily: 'Space Grotesk, monospace',
             fontSize: '0.625rem',
-            color: '#C49A3C',
             textTransform: 'uppercase',
             letterSpacing: '0.1em',
             marginBottom: '0.5rem',
@@ -270,16 +266,14 @@ export function TerminalDashboard() {
         {/* Command Output */}
         {commandOutput.length > 0 && (
           <div 
-            className="p-3 mb-3 max-h-40 overflow-y-auto"
-            style={{ backgroundColor: '#0D141F', borderRadius: '0.125rem' }}
+            className="p-3 mb-3 max-h-40 overflow-y-auto bg-polybloom-dark"
+            style={{ borderRadius: '0.125rem' }}
           >
             {commandOutput.map((line, i) => (
               <div 
                 key={i} 
+                className={`font-mono text-sm ${line.startsWith(">") ? "text-polybloom-gold" : "text-polybloom-white"}`}
                 style={{ 
-                  fontFamily: 'Space Grotesk, monospace',
-                  fontSize: '0.75rem',
-                  color: line.startsWith(">") ? "#C49A3C" : "#D2C5B1",
                   whiteSpace: 'pre-wrap',
                 }}
               >
@@ -296,24 +290,20 @@ export function TerminalDashboard() {
           onChange={(e) => setCommandInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="> Type a command (e.g., 'add panel markets', 'list bots', 'help')"
-          className="w-full outline-none px-2 py-1"
+          className="w-full outline-none px-2 py-1 font-mono text-sm text-polybloom-white"
           style={{
-            fontFamily: 'Space Grotesk, monospace',
-            fontSize: '0.75rem',
             backgroundColor: 'transparent',
-            color: '#F9F9FF',
             borderRadius: '0.125rem',
           }}
         />
       </div>
 
       {/* Footer */}
-      <div className="text-center py-4" style={{ borderTop: '1px solid #1C2431' }}>
+      <div className="text-center py-4" style={{ borderTop: '1px solid var(--border-primary)' }}>
         <p
+          className="font-mono text-polybloom-white-dim"
           style={{
-            fontFamily: 'Space Grotesk, monospace',
             fontSize: '0.625rem',
-            color: '#4E4637',
           }}
         >
           PolyBloom Terminal v0.2 | {statusText} | The Bespoke Ledger

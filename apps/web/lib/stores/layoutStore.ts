@@ -12,6 +12,8 @@ function arrayMove<T>(array: T[], from: number, to: number): T[] {
 export type PanelType =
   | "markets"
   | "polymarket"
+  | "polymarket-trading"
+  | "polymarket-portfolio"
   | "bot-control"
   | "chart"
   | "order-book"
@@ -33,6 +35,7 @@ export interface Panel {
 
 interface LayoutStore {
   panels: Panel[];
+  _isHydrated: boolean;
   _hydrateLayout: () => void;
   addPanel: (type: PanelType, title: string) => void;
   removePanel: (id: string) => void;

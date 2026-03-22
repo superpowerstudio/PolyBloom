@@ -13,12 +13,12 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#0A1019' }}>
+    <div className="min-h-screen flex flex-col bg-polybloom-dark">
       {/* Forensic Dot Grid */}
       <div
         className="absolute inset-0 opacity-5"
         style={{
-          backgroundImage: "radial-gradient(circle, #C49A3C 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, var(--polybloom-gold) 1px, transparent 1px)",
           backgroundSize: "24px 24px",
         }}
       />
@@ -27,10 +27,9 @@ export default function Home() {
       <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10">
         <div className="text-center mb-12">
           <p
+            className="font-mono text-polybloom-white-dim"
             style={{
-              fontFamily: 'Space Grotesk, monospace',
               fontSize: '0.75rem',
-              color: '#807665',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
               marginBottom: '1rem',
@@ -39,11 +38,10 @@ export default function Home() {
             THE BESPOKE LEDGER / GRAND OPUS PROTOCOL
           </p>
           <h1
+            className="font-display neon-glow"
             style={{
-              fontFamily: 'Newsreader, serif',
               fontStyle: 'italic',
               fontSize: '4rem',
-              color: '#C49A3C',
               fontWeight: 400,
               lineHeight: 1.1,
               marginBottom: '1rem',
@@ -52,10 +50,9 @@ export default function Home() {
             PolyBloom
           </h1>
           <p
+            className="font-body text-polybloom-white"
             style={{
-              fontFamily: 'Work Sans, sans-serif',
               fontSize: '1.125rem',
-              color: '#D2C5B1',
               maxWidth: '500px',
               margin: '0 auto',
               lineHeight: 1.6,
@@ -70,20 +67,18 @@ export default function Home() {
           {features.map((f, i) => (
             <div
               key={i}
-              className="p-4"
+              className="p-4 bg-polybloom-navy-mid"
               style={{
-                backgroundColor: '#111823',
-                border: '1px solid #1C2431',
+                border: '1px solid var(--border-primary)',
                 borderRadius: '0.125rem',
               }}
             >
               <div className="flex items-center gap-2 mb-2">
                 <span style={{ fontSize: '1.25rem' }}>{f.icon}</span>
                 <h3
+                  className="font-mono text-polybloom-gold"
                   style={{
-                    fontFamily: 'Space Grotesk, monospace',
                     fontSize: '0.75rem',
-                    color: '#C49A3C',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
                   }}
@@ -92,10 +87,9 @@ export default function Home() {
                 </h3>
               </div>
               <p
+                className="font-body text-polybloom-white"
                 style={{
-                  fontFamily: 'Work Sans, sans-serif',
                   fontSize: '0.875rem',
-                  color: '#D2C5B1',
                   lineHeight: 1.5,
                 }}
               >
@@ -109,14 +103,11 @@ export default function Home() {
         <div className="flex gap-4">
           <Link
             href="/terminal"
-            className="px-8 py-3 transition-colors"
+            className="px-8 py-3 transition-colors font-mono bg-polybloom-gold text-polybloom-dark"
             style={{
-              fontFamily: 'Space Grotesk, monospace',
               fontSize: '0.75rem',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
-              backgroundColor: '#C49A3C',
-              color: '#0A1019',
               borderRadius: '0.125rem',
             }}
           >
@@ -124,14 +115,12 @@ export default function Home() {
           </Link>
           <Link
             href="/polymarket"
-            className="px-8 py-3 transition-colors"
+            className="px-8 py-3 transition-colors font-mono text-polybloom-gold border-polybloom-neon"
             style={{
-              fontFamily: 'Space Grotesk, monospace',
               fontSize: '0.75rem',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
-              color: '#C49A3C',
-              border: '1px solid #C49A3C',
+              border: '1px solid',
               borderRadius: '0.125rem',
             }}
           >
@@ -149,10 +138,9 @@ export default function Home() {
             <Link
               key={link.href}
               href={link.href}
+              className="font-mono text-polybloom-white-dim"
               style={{
-                fontFamily: 'Space Grotesk, monospace',
                 fontSize: '0.75rem',
-                color: '#807665',
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em',
               }}
@@ -166,13 +154,12 @@ export default function Home() {
       {/* Footer */}
       <div
         className="py-6 text-center"
-        style={{ borderTop: '1px solid #1C2431' }}
+        style={{ borderTop: '1px solid var(--border-primary)' }}
       >
         <p
+          className="font-mono text-polybloom-white-dim"
           style={{
-            fontFamily: 'Space Grotesk, monospace',
             fontSize: '0.625rem',
-            color: '#4E4637',
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
           }}
